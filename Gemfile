@@ -7,7 +7,10 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gem 'dry-system'
 gem 'grape'
 
-gem 'rspec', group: %i[development test]
+group :development, :test do
+  gem 'rack-test'
+  gem 'rspec'
+end
 
 group :development do
   gem 'byebug'

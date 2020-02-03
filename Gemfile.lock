@@ -69,6 +69,8 @@ GEM
     rack (2.1.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     reline (0.1.2)
       io-console (~> 0.5)
     rspec (3.9.0)
@@ -98,6 +100,7 @@ DEPENDENCIES
   dry-system
   grape
   irb
+  rack-test
   rspec
 
 BUNDLED WITH

@@ -5,8 +5,12 @@ require 'securerandom'
 require 'import'
 
 class Api < Grape::API
-  URL_REGEXP = %r{http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+}.freeze
   format :json
+  rescue_from Grape::Exceptions::ValidationErrors do |e|
+    error! e.full_messages, 422
+  end
+
+  URL_REGEXP = %r{http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+}.freeze
 
   desc 'Get a short link to the given resource'
   params do
@@ -14,9 +18,7 @@ class Api < Grape::API
   end
   post do
     key = SecureRandom.alphanumeric(10)
-    App['store'].transaction do
-      App['store'][key] = params[:link]
-    end
+    App['store'].transaction { App['store'][key] = params[:link] }
     { link: URI.join(request.url, key) }
   end
 
@@ -26,9 +28,11 @@ class Api < Grape::API
   end
   route_param :id do
     get do
-      App['store'].transaction(true) do
-        redirect App['store'][params[:id]]
-      end
+      link_to_redirect = App['store'].transaction(true) { App['store'][params[:id]] }
+
+      return error!(:not_found, 404) if link_to_redirect.blank?
+
+      redirect link_to_redirect
     end
   end
 end
