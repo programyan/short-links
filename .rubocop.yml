@@ -1,0 +1,21 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.6.3
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Max: 120
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
