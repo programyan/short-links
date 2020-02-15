@@ -54,4 +54,10 @@ describe Api do
       it { expect(last_response.status).to eq 201 }
     end
   end
+
+  describe 'Swagger Documentation' do
+    before { get '/swagger/docs' }
+
+    it { expect(last_response.status).to eq 200 }
+  end
 end
