@@ -6,6 +6,8 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'dry-system'
 gem 'grape'
+gem 'grape-swagger'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   gem 'rack-test'
